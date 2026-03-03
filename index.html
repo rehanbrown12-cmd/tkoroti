@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading...</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0E0B07;--surface:#181208;--card:#1E1610;--border:#2E2218;--brown:#8B5E3C;--caramel:#C4883A;--gold:#E8A84A;--text:#E8DDD0;--muted:#7A6A58}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overflow-x:hidden}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--brown);border-radius:3px}
+
+  #loadingScreen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s}
+  #loadingScreen.hide{opacity:0;pointer-events:none}
+  .loader{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--caramel);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loadingScreen p{color:var(--muted);font-size:.85rem}
+
+  nav{background:rgba(14,11,7,.92);backdrop-filter:blur(12px);padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);animation:slideDown .6s ease}
+  @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+  .nav-logo{display:flex;align-items:center;gap:.8rem}
+  .nav-logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid rgba(196,136,58,.3)}
+  .nav-logo-text{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;line-height:1.2}
+  .nav-logo-text small{display:block;color:var(--muted);font-size:.65rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+  nav ul{list-style:none;display:flex;gap:2rem;align-items:center}
+  nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:300;transition:color .3s}
+  nav a:hover{color:var(--gold)}
+
+  .hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(196,136,58,.08) 0%,transparent 70%)}
+  .particle{position:absolute;border-radius:50%;animation:floatUp linear infinite;opacity:0}
+  @keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.4}90%{opacity:.15}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
+  .hero-logo{width:160px;height:160px;border-radius:50%;object-fit:cover;border:2px solid rgba(196,136,58,.3);box-shadow:0 0 40px rgba(196,136,58,.15);margin-bottom:2rem;animation:fadeUp .8s ease .2s both,glowPulse 4s ease-in-out 1.5s infinite}
+  @keyframes glowPulse{0%,100%{box-shadow:0 0 40px rgba(196,136,58,.15)}50%{box-shadow:0 0 70px rgba(196,136,58,.35)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .hero-tag{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(196,136,58,.3);color:var(--caramel);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;padding:.4rem 1.2rem;border-radius:999px;margin-bottom:1.5rem;animation:fadeUp .8s ease .3s both;background:rgba(196,136,58,.05)}
+  .hero h1{font-family:'Playfair Display',serif;color:var(--text);font-size:clamp(2.5rem,6vw,5rem);line-height:1.05;margin-bottom:.5rem;animation:fadeUp .8s ease .4s both}
+  .hero h1 em{color:var(--gold);font-style:italic}
+  .hero-sub{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:1.1rem;margin-bottom:1.5rem;animation:fadeUp .8s ease .5s both}
+  .hero p{color:var(--muted);max-width:440px;margin:0 auto 2.5rem;font-weight:300;line-height:1.8;font-size:.95rem;animation:fadeUp .8s ease .6s both}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s ease .7s both}
+  .btn{background:var(--caramel);color:#fff;padding:.85rem 2.2rem;border:none;border-radius:999px;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;font-family:inherit}
+  .btn:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,136,58,.35)}
+  .btn-ghost{background:none;color:var(--text);padding:.85rem 2.2rem;border:1px solid var(--border);border-radius:999px;font-size:.9rem;font-weight:300;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;font-family:inherit}
+  .btn-ghost:hover{border-color:var(--caramel);color:var(--caramel)}
+
+  .divider{display:flex;align-items:center;gap:1.5rem;padding:0 2.5rem;max-width:1100px;margin:0 auto}
+  .divider-line{flex:1;height:1px;background:var(--border)}
+  .divider-icon{color:var(--caramel);font-size:1.2rem}
+
+  .section{padding:4rem 2.5rem;max-width:1100px;margin:0 auto}
+  .section-title{font-family:'Playfair Display',serif;font-size:2rem;color:var(--text);margin-bottom:.4rem}
+  .section-title span{color:var(--gold);font-style:italic}
+  .section-sub{color:var(--muted);font-size:.88rem;font-weight:300;margin-bottom:2.5rem}
+
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem}
+  .product-card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:all .4s cubic-bezier(.175,.885,.32,1.275);animation:fadeUp .5s ease both}
+  .product-card:hover{transform:translateY(-6px);border-color:rgba(196,136,58,.3);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+  .card-img-wrap{overflow:hidden;height:210px}
+  .product-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+  .product-card:hover .product-img{transform:scale(1.05)}
+  .img-placeholder{width:100%;height:210px;background:linear-gradient(135deg,var(--surface),var(--border));display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .img-placeholder span{font-size:3rem;opacity:.4}
+  .img-placeholder p{font-size:.72rem;color:var(--muted);margin-top:.5rem;opacity:.6}
+  .product-info{padding:1.3rem 1.5rem 1.5rem}
+  .product-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:.4rem}
+  .product-desc{font-size:.82rem;color:var(--muted);font-weight:300;line-height:1.6;margin-bottom:1.1rem}
+  .product-footer{display:flex;justify-content:space-between;align-items:center}
+  .price{font-size:1rem;font-weight:500;color:var(--gold)}
+  .order-btn{background:rgba(196,136,58,.15);color:var(--caramel);border:1px solid rgba(196,136,58,.3);border-radius:999px;padding:.4rem 1rem;font-size:.8rem;cursor:pointer;transition:all .3s;font-family:inherit;text-decoration:none;display:inline-block}
+  .order-btn:hover{background:var(--caramel);color:#fff}
+
+  .kontak-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;text-align:center;max-width:520px;margin:0 auto}
+  .kontak-box p{color:var(--muted);font-weight:300;line-height:2;font-size:.95rem}
+  .kontak-box a{color:var(--caramel);text-decoration:none}
+  .wa-btns{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+  .wa-btn{display:inline-flex;align-items:center;gap:.7rem;background:#25D366;color:#fff;padding:.85rem 2rem;border-radius:999px;text-decoration:none;font-weight:500;font-size:.9rem;transition:all .3s;justify-content:center}
+  .wa-btn:hover{background:#1ab554;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.3);color:#fff}
+  .social-links{display:flex;gap:1rem;justify-content:center;margin-top:1.2rem}
+  .social-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.75rem 1.5rem;border-radius:999px;text-decoration:none;font-weight:500;font-size:.88rem;transition:all .3s;border:1px solid var(--border);color:var(--muted)}
+  .social-btn:hover{transform:translateY(-2px)}
+  .social-btn.fb{border-color:#1877F2;color:#1877F2}
+  .social-btn.fb:hover{background:#1877F2;color:#fff;box-shadow:0 8px 24px rgba(24,119,242,.3)}
+  .social-btn.ig{border-color:#E1306C;color:#E1306C}
+  .social-btn.ig:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(225,48,108,.3)}
+
+  footer{border-top:1px solid var(--border);padding:2.5rem;text-align:center;margin-top:3rem}
+  .footer-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.2rem;margin-bottom:.5rem}
+  footer p{color:var(--muted);font-size:.82rem;font-weight:300}
+
+  .empty-state{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:var(--muted)}
+  .empty-icon{font-size:4rem;margin-bottom:1rem;opacity:.4;animation:bounce 2s ease infinite;display:block}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .empty-state p{font-size:.95rem;font-weight:300;line-height:1.8}
+
+  @media(max-width:640px){nav ul li:not(:last-child){display:none}.section{padding:3rem 1.5rem}}
+</style>
+</head>
+<body>
+
+<div id="loadingScreen">
+  <div class="loader"></div>
+  <p>Memuat menu...</p>
+</div>
+
+<nav>
+  <div class="nav-logo">
+    <img id="navLogo" src="" alt="Logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      <span id="navNama">Hao Chi</span>
+      <small>Mom's Bakery</small>
+    </div>
+  </div>
+  <ul>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#tentang">Tentang</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div id="particles"></div>
+  <img class="hero-logo" id="heroLogo" src="" alt="Logo" onerror="this.style.display='none'">
+  <div class="hero-tag">✨ Artisan Bakery · 好吃</div>
+  <h1 id="heroTagline">Roti Buatan<br><em>Penuh Cinta</em></h1>
+  <div class="hero-sub" id="heroSubjudul"></div>
+  <p id="heroDeskripsi"></p>
+  <div class="hero-btns">
+    <a href="#menu" class="btn">Lihat Menu</a>
+    <a href="#" class="btn-ghost" id="heroWa">Pesan Sekarang</a>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-icon">🌾</div><div class="divider-line"></div></div>
+
+<div class="section" id="menu">
+  <div class="section-title">Menu <span>Kami</span></div>
+  <div class="section-sub">Semua produk segar dipanggang setiap hari</div>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-icon">🥐</div><div class="divider-line"></div></div>
+
+<div class="section" id="tentang" style="text-align:center;max-width:680px">
+  <div class="section-title" style="margin-bottom:.8rem">Tentang <span>Kami</span></div>
+  <p id="tentangTeks" style="color:var(--muted);font-weight:300;line-height:1.9;font-size:.95rem"></p>
+</div>
+
+<div class="section" id="kontak">
+  <div class="section-title" style="text-align:center;margin-bottom:1.5rem">Hubungi <span>Kami</span></div>
+  <div class="kontak-box">
+    <p id="kontakInfo"></p>
+    <div class="wa-btns">
+      <a id="waBtn1" href="#" class="wa-btn" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.856L.057 23.998l6.304-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.359-.214-3.722.976.997-3.645-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp 1 · +62 856-4636-6860
+      </a>
+      <a id="waBtn2" href="#" class="wa-btn" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.856L.057 23.998l6.304-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.359-.214-3.722.976.997-3.645-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp 2 · +886 963-744-844
+      </a>
+    </div>
+    <div class="social-links">
+      <a id="fbBtn" href="#" class="social-btn fb" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+      <a id="igBtn" href="#" class="social-btn ig" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo" id="footerNama"></div>
+  <p id="footerJam"></p>
+  <div style="display:flex;gap:1rem;justify-content:center;margin-top:1rem" id="footerSocial">
+    <a id="footerFb" href="#" target="_blank" style="color:#1877F2;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a id="footerIg" href="#" target="_blank" style="color:#E1306C;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a id="footerWa" href="#" target="_blank" style="color:#25D366;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.856L.057 23.998l6.304-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.359-.214-3.722.976.997-3.645-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+async function loadMenu() {
+  try {
+    const res = await fetch('menu.json');
+    if (!res.ok) throw new Error('not found');
+    const data = await res.json();
+    applyData(data);
+  } catch(e) {
+    document.getElementById('productGrid').innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">⚠️</span>
+        <p>Gagal memuat <strong style="color:var(--caramel)">menu.json</strong>.<br>
+        Pastikan file ada di folder yang sama dengan index.html.</p>
+      </div>`;
+  } finally {
+    const ls = document.getElementById('loadingScreen');
+    ls.classList.add('hide');
+    setTimeout(() => ls.remove(), 600);
+  }
+}
+
+function applyData(data) {
+  const t = data.toko, k = data.kontak;
+
+  document.title = t.nama;
+  document.getElementById('navLogo').src = t.logo;
+  document.getElementById('navNama').textContent = t.nama;
+  document.getElementById('heroLogo').src = t.logo;
+  document.getElementById('heroTagline').innerHTML = t.tagline;
+  document.getElementById('heroSubjudul').textContent = t.subjudul;
+  document.getElementById('heroDeskripsi').textContent = t.deskripsi;
+  document.getElementById('heroWa').href = k.pesan_disini;
+  document.getElementById('tentangTeks').textContent = t.deskripsi;
+  document.getElementById('kontakInfo').innerHTML = `📍 ${k.alamat}<br>🕐 ${k.jam_buka}`;
+
+  const wa1 = `https://wa.me/${k.whatsapp1}?text=Halo%20Hao%20Chi%2C%20saya%20mau%20pesan!`;
+  const wa2 = `https://wa.me/${k.whatsapp2}?text=Halo%20Hao%20Chi%2C%20saya%20mau%20pesan!`;
+  document.getElementById('waBtn1').href = wa1;
+  document.getElementById('waBtn2').href = wa2;
+  document.getElementById('heroWa').href = wa1;
+  document.getElementById('fbBtn').href = k.facebook;
+  document.getElementById('igBtn').href = k.instagram;
+
+  document.getElementById('footerNama').textContent = t.nama;
+  document.getElementById('footerJam').textContent = `Buka: ${k.jam_buka}`;
+  document.getElementById('footerFb').href = k.facebook;
+  document.getElementById('footerIg').href = k.instagram;
+  document.getElementById('footerWa').href = wa1;
+
+  if (t.warna_utama) {
+    document.documentElement.style.setProperty('--caramel', t.warna_utama);
+  }
+
+  renderMenu(data.menu, k.whatsapp1);
+}
+
+function renderMenu(menu, waNum) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+
+  if (!menu || menu.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <span class="empty-icon">🥐</span>
+      <p>Belum ada menu.<br>Tambahkan produk di <strong style="color:var(--caramel)">menu.json</strong></p>
+    </div>`;
+    return;
+  }
+
+  menu.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.style.animationDelay = (i * 0.08) + 's';
+
+    const imgHtml = p.gambar
+      ? `<div class="card-img-wrap"><img class="product-img" src="${p.gambar}" alt="${p.nama}" onerror="this.parentElement.outerHTML='<div class=\\'img-placeholder\\'><span>🥖</span><p>Gambar tidak tersedia</p></div>'"></div>`
+      : `<div class="img-placeholder"><span>🥖</span><p>Belum ada gambar</p></div>`;
+
+    const pesanUrl = `https://wa.me/${waNum}?text=Halo%2C%20saya%20mau%20pesan%20*${encodeURIComponent(p.nama)}*%20Rp%20${encodeURIComponent(p.harga)}`;
+
+    card.innerHTML = `${imgHtml}
+      <div class="product-info">
+        <div class="product-name">${p.nama}</div>
+        <div class="product-desc">${p.deskripsi}</div>
+        <div class="product-footer">
+          <div class="price">Rp ${p.harga}</div>
+          <a href="${pesanUrl}" target="_blank" class="order-btn">Pesan →</a>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 1;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:rgba(196,136,58,${(Math.random()*.4+.1).toFixed(2)});animation-duration:${(Math.random()*15+10).toFixed(1)}s;animation-delay:${(Math.random()*10).toFixed(1)}s`;
+    container.appendChild(p);
+  }
+}
+
+createParticles();
+loadMenu();
+</script>
+</body>
+</html>

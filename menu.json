@@ -1,0 +1,19 @@
+{
+  "toko": {
+    "nama": "Hao Chi Mom's Bakery",
+    "tagline": "Roti Buatan<br><em>Penuh Cinta</em>",
+    "subjudul": "hǎo chī — enak dimakan",
+    "deskripsi": "Setiap roti dibuat dengan tangan dan dipanggang segar setiap hari. Rasakan kehangatan seperti buatan rumah sendiri.",
+    "logo": "logo.png",
+    "warna_utama": "#C4883A"
+  },
+  "kontak": {
+    "alamat": "Jakarta, Indonesia",
+    "whatsapp1": "6285646366860",
+    "whatsapp2": "886963744844",
+    "facebook": "https://www.facebook.com/share/1FgPvEydV4/",
+    "instagram": "https://www.instagram.com/ishmagrop?igsh=MWM5OXFldjdoM3JxdQ==",
+    "jam_buka": "Senin – Sabtu, 07.00 – 20.00"
+  },
+  "menu": []
+}
