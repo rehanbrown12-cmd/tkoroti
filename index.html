@@ -42,7 +42,7 @@ a { text-decoration: none; color: inherit; }
 }
 .bread {
   position: absolute;
-  opacity: var(--op, 0.055);
+  opacity: var(--op, 0.18);
   will-change: transform;
   animation: driftLR var(--dur, 18s) ease-in-out infinite alternate,
              driftUD var(--dur2, 22s) ease-in-out infinite alternate;
@@ -494,48 +494,53 @@ footer {
 <div class="bg-layer" aria-hidden="true">
 
   <!-- Loaf 1 -->
-  <div class="bread" style="--sz:50px;--op:0.06;--dur:20s;--dur2:26s;--dx:55px;--dy:40px;--rot0:-8deg;--rot1:10deg;top:6%;left:5%">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11C3 7.686 6.134 5 10 5h4c3.866 0 7 2.686 7 6v7a1 1 0 01-1 1H4a1 1 0 01-1-1v-7z"/><path d="M3 13h18" stroke="#0A0806" stroke-width="1.2" fill="none"/></svg>
+  <div class="bread" style="--sz:56px;--op:0.20;--dur:20s;--dur2:26s;--dx:55px;--dy:40px;--rot0:-8deg;--rot1:10deg;top:6%;left:5%">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11C3 7.686 6.134 5 10 5h4c3.866 0 7 2.686 7 6v7a1 1 0 01-1 1H4a1 1 0 01-1-1v-7z"/></svg>
   </div>
 
   <!-- Croissant 2 -->
-  <div class="bread" style="--sz:42px;--op:0.05;--dur:17s;--dur2:23s;--dx:-48px;--dy:52px;--rot0:12deg;--rot1:-6deg;top:12%;right:7%">
+  <div class="bread" style="--sz:48px;--op:0.18;--dur:17s;--dur2:23s;--dx:-48px;--dy:52px;--rot0:12deg;--rot1:-6deg;top:12%;right:7%">
     <svg viewBox="0 0 64 64" fill="currentColor"><path d="M32 8c-6 0-12 4-16 10L4 52l14-8c4 6 8 10 14 10s10-4 14-10l14 8-12-34C44 12 38 8 32 8z"/></svg>
   </div>
 
-  <!-- Star/sparkle 3 -->
-  <div class="bread" style="--sz:22px;--op:0.07;--dur:14s;--dur2:18s;--dx:30px;--dy:-28px;--rot0:0deg;--rot1:180deg;top:22%;left:25%">
+  <!-- Star 3 -->
+  <div class="bread" style="--sz:26px;--op:0.22;--dur:14s;--dur2:18s;--dx:30px;--dy:-28px;--rot0:0deg;--rot1:180deg;top:22%;left:25%">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z"/></svg>
   </div>
 
   <!-- Wheat 4 -->
-  <div class="bread" style="--sz:38px;--op:0.055;--dur:24s;--dur2:19s;--dx:38px;--dy:-32px;--rot0:5deg;--rot1:20deg;top:50%;left:3%">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 22V10"/><path d="M12 10c0 0-4-2-4-5.5S12 1 12 1s4 2 4 4.5S12 10 12 10z"/><path d="M12 13c0 0-3.5-1-4 2M12 13c0 0 3.5-1 4 2"/><path d="M12 17c0 0-3-1-3.5 1.5M12 17c0 0 3-1 3.5 1.5"/></svg>
+  <div class="bread" style="--sz:44px;--op:0.17;--dur:24s;--dur2:19s;--dx:38px;--dy:-32px;--rot0:5deg;--rot1:20deg;top:50%;left:3%">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V10"/><path d="M12 10c0 0-4-2-4-5.5S12 1 12 1s4 2 4 4.5S12 10 12 10z"/><path d="M12 13c0 0-3.5-1-4 2M12 13c0 0 3.5-1 4 2"/><path d="M12 17c0 0-3-1-3.5 1.5M12 17c0 0 3-1 3.5 1.5"/></svg>
   </div>
 
   <!-- Bun 5 -->
-  <div class="bread" style="--sz:46px;--op:0.06;--dur:22s;--dur2:28s;--dx:-42px;--dy:28px;--rot0:-15deg;--rot1:5deg;top:68%;right:5%">
+  <div class="bread" style="--sz:52px;--op:0.19;--dur:22s;--dur2:28s;--dx:-42px;--dy:28px;--rot0:-15deg;--rot1:5deg;top:68%;right:5%">
     <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="9.5" rx="8" ry="5.5"/><rect x="4" y="14" width="16" height="3.5" rx="1.75"/></svg>
   </div>
 
   <!-- Pretzel 6 -->
-  <div class="bread" style="--sz:40px;--op:0.05;--dur:19s;--dur2:25s;--dx:-35px;--dy:45px;--rot0:20deg;--rot1:-10deg;top:35%;left:55%">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3C9.5 3 7.5 5 7.5 7.5C7.5 10 9.5 12 12 12C14.5 12 16.5 10 16.5 7.5C16.5 5 14.5 3 12 3Z"/><path d="M7.5 7.5C5 8 3 10 3 13C3 16 5.5 18.5 8.5 18.5C10 18.5 11 18 12 17"/><path d="M16.5 7.5C19 8 21 10 21 13C21 16 18.5 18.5 15.5 18.5C14 18.5 13 18 12 17"/></svg>
+  <div class="bread" style="--sz:46px;--op:0.16;--dur:19s;--dur2:25s;--dx:-35px;--dy:45px;--rot0:20deg;--rot1:-10deg;top:35%;left:55%">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3C9.5 3 7.5 5 7.5 7.5C7.5 10 9.5 12 12 12C14.5 12 16.5 10 16.5 7.5C16.5 5 14.5 3 12 3Z"/><path d="M7.5 7.5C5 8 3 10 3 13C3 16 5.5 18.5 8.5 18.5C10 18.5 11 18 12 17"/><path d="M16.5 7.5C19 8 21 10 21 13C21 16 18.5 18.5 15.5 18.5C14 18.5 13 18 12 17"/></svg>
   </div>
 
-  <!-- Small star 7 -->
-  <div class="bread" style="--sz:18px;--op:0.08;--dur:12s;--dur2:16s;--dx:22px;--dy:-20px;--rot0:0deg;--rot1:90deg;top:80%;left:30%">
+  <!-- Star small 7 -->
+  <div class="bread" style="--sz:20px;--op:0.25;--dur:12s;--dur2:16s;--dx:22px;--dy:-20px;--rot0:0deg;--rot1:90deg;top:80%;left:30%">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z"/></svg>
   </div>
 
   <!-- Loaf 8 -->
-  <div class="bread" style="--sz:36px;--op:0.045;--dur:26s;--dur2:21s;--dx:45px;--dy:35px;--rot0:8deg;--rot1:-5deg;top:88%;left:75%">
+  <div class="bread" style="--sz:40px;--op:0.15;--dur:26s;--dur2:21s;--dx:45px;--dy:35px;--rot0:8deg;--rot1:-5deg;top:88%;left:75%">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11C3 7.686 6.134 5 10 5h4c3.866 0 7 2.686 7 6v7a1 1 0 01-1 1H4a1 1 0 01-1-1v-7z"/></svg>
   </div>
 
   <!-- Wheat 9 -->
-  <div class="bread" style="--sz:30px;--op:0.065;--dur:16s;--dur2:20s;--dx:-25px;--dy:-30px;--rot0:-5deg;--rot1:15deg;top:45%;right:3%">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 22V10"/><path d="M12 10c0 0-4-2-4-5.5S12 1 12 1s4 2 4 4.5S12 10 12 10z"/><path d="M12 13c0 0-3.5-1-4 2M12 13c0 0 3.5-1 4 2"/></svg>
+  <div class="bread" style="--sz:36px;--op:0.20;--dur:16s;--dur2:20s;--dx:-25px;--dy:-30px;--rot0:-5deg;--rot1:15deg;top:45%;right:3%">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V10"/><path d="M12 10c0 0-4-2-4-5.5S12 1 12 1s4 2 4 4.5S12 10 12 10z"/><path d="M12 13c0 0-3.5-1-4 2M12 13c0 0 3.5-1 4 2"/></svg>
+  </div>
+
+  <!-- Croissant 10 -->
+  <div class="bread" style="--sz:38px;--op:0.17;--dur:21s;--dur2:17s;--dx:30px;--dy:25px;--rot0:-10deg;--rot1:8deg;top:92%;left:12%">
+    <svg viewBox="0 0 64 64" fill="currentColor"><path d="M32 8c-6 0-12 4-16 10L4 52l14-8c4 6 8 10 14 10s10-4 14-10l14 8-12-34C44 12 38 8 32 8z"/></svg>
   </div>
 
 </div>
@@ -761,9 +766,9 @@ const MENU_DATA = [
     harga:     "45.000",
     deskripsi: "Halus dan lembut, cocok dibuat acara keluarga.",
     gambar:    [
-      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80",
-      "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+      "https://i.postimg.cc/sDYp8yV8/20260303-161537.png",
+      "",
+      ""
     ]
     /* gambar bisa 1 link: gambar: "https://..."
        atau beberapa link sekaligus (gallery): gambar: ["link1","link2","link3"] */
